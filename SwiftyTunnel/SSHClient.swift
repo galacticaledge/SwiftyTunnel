@@ -69,23 +69,21 @@ actor SSHSession {
     
     func list(_ path: String) async throws -> [SFTPPathComponent] {
         // Get list of files
-        try await sftp!.listDirectory(atPath: path).flatMap(\.components)
+        guard let sftp else { throw EditError.notConnected }
+        return try await sftp.listDirectory(atPath: path).flatMap(\.components)
     }
 
     func read(_ path: String) async throws -> String {
-        // Read file contents
-        let file = try await sftp!.openFile(filePath: path, flags: .read)
+        guard let sftp else { throw EditError.notConnected }
+        let file = try await sftp.openFile(filePath: path, flags: .read)
         defer { Task { try? await file.close() } }
         let buf = try await file.readAll()
         return buf.getString(at: 0, length: buf.readableBytes) ?? ""
     }
 
     func write(_ path: String, _ text: String) async throws {
-        // Write to the file
-        let file = try await sftp!.openFile(
-            filePath: path,
-            flags: [.write, .create, .truncate]
-        )
+        guard let sftp else { throw EditError.notConnected }
+        let file = try await sftp.openFile(filePath: path, flags: [.write, .create, .truncate])
         var buf = ByteBufferAllocator().buffer(capacity: text.utf8.count)
         buf.writeString(text)
         try await file.write(buf, at: 0)
@@ -123,7 +121,8 @@ actor SSHSession {
     }
 
     func stat(_ path: String) async throws -> SFTPFileAttributes {
-        try await sftp!.getAttributes(at: path)
+        guard let sftp else { throw EditError.notConnected }
+        return try await sftp.getAttributes(at: path)
     }
 
     func readBytes(_ path: String) async throws -> Data {
