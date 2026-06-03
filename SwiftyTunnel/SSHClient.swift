@@ -43,7 +43,7 @@ actor SSHSession {
             host: host,
             authenticationMethod: .passwordBased(username: user, password: password),
             hostKeyValidator: .acceptAnything(),
-            reconnect: .never
+            reconnect: .always
         )
         sftp = try await client?.openSFTP()
         connectedHost = host

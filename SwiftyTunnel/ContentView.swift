@@ -747,6 +747,7 @@ struct ContentView: View {
     @State private var terminalHeight: CGFloat = 280         // current height of the terminal pane in pt
     @State private var keyboardHeight: CGFloat = 0           // kept up-to-date by `observeKeyboardGlobal`; currently informational
     @State private var terminalDragStartHeight: CGFloat? = nil // remembers the height when a resize drag begins
+    @State private var contentHeight: CGFloat = 0           // updated by .onGeometryChange; used to cap the terminal at half the window
 
     // `let`/`var` without `@State` is a plain stored property. `database` is created once
     // when the view is initialized and never reassigned, so a regular `private var` is fine.
@@ -776,6 +777,7 @@ struct ContentView: View {
                 // `.onDelete` adds swipe-to-delete on each row in the List.
                 .onDelete(perform: deleteItem)
             }
+            .navigationTitle("Hosts")
             // Toolbar items live in the navigation bar (top of the sidebar).
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -832,10 +834,20 @@ struct ContentView: View {
                         .frame(height: terminalHeight)
                 }
                 .background(Color.black) // fills the home-indicator area cleanly
-                // Ignore the geometric safe-area only (notch / home indicator) so the
-                // terminal extends to the physical bottom of the screen. We do NOT ignore
-                // the keyboard safe area, so SwiftUI auto-raises the overlay when typing.
-                .ignoresSafeArea(.container, edges: .bottom)
+                // Ignore both the geometric safe-area (notch / home indicator) AND the
+                // keyboard safe-area so the terminal keeps its full height when the on-screen
+                // keyboard appears — the keyboard simply sits in front of it.
+                .ignoresSafeArea([.container, .keyboard], edges: .bottom)
+            }
+        }
+        // Tracks the available content height so the terminal pane can never grow past half of it.
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.height
+        } action: { newValue in
+            contentHeight = newValue
+            // If a previously-saved height now exceeds half the window (e.g., rotation), shrink it.
+            if contentHeight > 0, terminalHeight > contentHeight / 2 {
+                terminalHeight = max(120, contentHeight / 2)
             }
         }
         // `.onChange(of:)` fires whenever the bound value changes. Here: when the user
@@ -882,8 +894,10 @@ struct ContentView: View {
                 .onEnded { value in
                     let start = terminalDragStartHeight ?? terminalHeight
                     // Drag up = grow taller (translation.height is negative when dragging up,
-                    // so we subtract). Clamp between 120pt and 800pt so the pane can't vanish.
-                    let final = max(120, min(800, start - value.translation.height))
+                    // so we subtract). Clamp between 120pt and the smaller of 800pt or half
+                    // the available window height, so the terminal can't take over the screen.
+                    let upperBound = contentHeight > 0 ? min(800, contentHeight / 2) : 800
+                    let final = max(120, min(upperBound, start - value.translation.height))
                     terminalDragStartHeight = nil
                     terminalHeight = final
                 }
