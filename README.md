@@ -1,4 +1,5 @@
-<img width="1500" height="1158" alt="Simulator Screenshot - iPad (A16) - 2026-06-01 at 22 28 02 (1)" src="https://github.com/user-attachments/assets/a8556080-c5cf-42fc-8dc2-f480ca42eb27" />
+<img width="1500" height="1150" alt="Simulator Screenshot - iPad (A16) - 2026-06-01 at 22 28 02 (3)" src="https://github.com/user-attachments/assets/8ef01731-4d43-4d6d-8992-415cb81a9db2" />
+
 
 # SwiftyTunnel
 A free and open source SSH + SFTP client for iOS and iPadOS devices. Manage your remote servers when you can't access a computer. Features include:
