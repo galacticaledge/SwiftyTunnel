@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "B7EA636F-B12F-493E-AA76-40C421831E70"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SwiftyTunnel/SSHClient.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
+            landmarkName = "download(_:_:isDir:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - 25fc9821d3b8c1d5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - 168325c2de30dd3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - dbb813e1325cd0ef"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) await resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - 5ec46b8a060a49d1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - bab185c01032b52f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - e8f5d77c180395b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(13) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+               <Location
+                  uuid = "7CFEFE04-2F7D-4D56-8905-0D0BBACEB303 - d1fc06f7c8ba30b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(14) suspend resume partial function for SwiftyTunnel.SSHSession.download(_: Swift.String, _: Swift.String, isDir: Swift.Bool) async throws -&gt; ()"
+                  moduleName = "SwiftyTunnel.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/SwiftProjects/SwiftEditSH/SwiftyTunnel/SSHClient.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
