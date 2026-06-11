@@ -12,9 +12,3 @@ A free and open source SSH + SFTP client for iOS and iPadOS devices. Manage your
 # How to Use
 I currently do not have a way to access this app, either via the App Store or third-party methods like AltStore. You will have to build it manually in Xcode
 in the interim.
-
-# Technologies Used
-- [SwiftTerm](https://github.com/migueldeicaza/SwiftTerm) by Miguel De Icaza
-- [Citadel](https://github.com/orlandos-nl/Citadel) by orlandos-nl
-- [SQLite3.swift](https://github.com/stephencelis/SQLite.swift) by stephencelis
-- [SwiftUI](https://developer.apple.com/swiftui/) by Apple
