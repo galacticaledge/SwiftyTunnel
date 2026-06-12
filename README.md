@@ -12,3 +12,7 @@ A free and open source SSH + SFTP client for iOS and iPadOS devices. Manage your
 # How to Use
 I currently do not have a way to access this app, either via the App Store or third-party methods like AltStore. You will have to build it manually in Xcode
 in the interim.
+
+# Goals
+- Add support for uploading files/folders
+- Move passwords to Keychain for security
