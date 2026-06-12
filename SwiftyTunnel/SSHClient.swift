@@ -101,6 +101,27 @@ actor SSHSession {
         }
     }
     
+    func download(_ path: String, _ dest: String, isDir: Bool) async throws {
+        let destURL = URL(filePath: dest)
+        let filename = (path as NSString).lastPathComponent
+        let localURL = destURL.appending(path: filename)
+
+        if !isDir {
+            let file = try await sftp?.openFile(filePath: path, flags: [.read])
+            guard let buf = try await file?.readAll() else { return }
+            try Data(buffer: buf).write(to: localURL)
+            try await file?.close()
+        } else {
+            let entries = try await sftp?.listDirectory(atPath: path).flatMap(\.components) ?? []
+            try FileManager.default.createDirectory(at: localURL, withIntermediateDirectories: true)
+            for entry in entries where entry.filename != "." && entry.filename != ".." {
+                let childPath = path + "/" + entry.filename
+                let isChildDir = ((entry.attributes.permissions ?? 0) & 0o170000) == 0o040000
+                try await download(childPath, localURL.path, isDir: isChildDir)
+            }
+        }
+    }
+    
     func rename(_ path: String, _ newPath: String) async throws {
         try await sftp?.rename(at: path, to: newPath)
     }

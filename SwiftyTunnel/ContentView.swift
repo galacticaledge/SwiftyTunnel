@@ -9,6 +9,7 @@ import SwiftUI        // SwiftUI views, modifiers, property wrappers
 import SwiftData      // Used by the Preview's modelContainer (and available for future model storage)
 import Citadel        // The SSH client library — provides SSHClient, SFTPClient, withPTY, etc.
 import SwiftTerm      // The VT100 terminal emulator UIView (TerminalView) that we host
+internal import UniformTypeIdentifiers
 
 // MARK: - TerminalPaneView
 //
@@ -463,6 +464,17 @@ struct HostView: View {
 
     @State private var showCreateNew: Bool = false
     
+    @State private var isDownloading = false
+    
+    struct DownloadTarget: Identifiable {
+        let id = UUID()
+        let path: String
+        let isDir: Bool
+    }
+
+    @State private var downloadTarget: DownloadTarget? = nil
+    @State private var showFolderPicker = false
+    
     var body: some View {
         // Each HostView gets its own NavigationStack so file pushes happen inside this column.
         NavigationStack {
@@ -496,7 +508,11 @@ struct HostView: View {
                 Color.clear.frame(height: showTerminal ? terminalHeight + 16 : 0)
             }
             .toolbar {
+    
                 ToolbarItemGroup {
+                    if isDownloading {
+                        ProgressView()
+                    }
                     Button {
                         showCreateNew = true
                     } label: {
@@ -570,6 +586,24 @@ struct HostView: View {
                     }
                 }
             }
+            .fileImporter(
+                isPresented: $showFolderPicker,
+                allowedContentTypes: [.folder]
+            ) { result in
+                guard case .success(let folderURL) = result, let target = downloadTarget else { return }
+                Task {
+                    isDownloading = true
+                    defer { isDownloading = false }
+                    let granted = folderURL.startAccessingSecurityScopedResource()
+                    defer { if granted { folderURL.stopAccessingSecurityScopedResource() } }
+                    do {
+                        try await ssh.download(target.path, folderURL.path, isDir: target.isDir)
+                    } catch {
+                        actionError = error.localizedDescription
+                    }
+                    downloadTarget = nil
+                }
+            }
             .navigationTitle(host.name)
             // `.task(id:)` reruns the closure whenever the id string changes.
             // host.id changes when SwiftUI gives us a different HostView instance for a
@@ -608,6 +642,7 @@ struct HostView: View {
                 Label(entry.filename, systemImage: "doc")
             }
             .contextMenu { entryContextMenu(for: entry) }
+            
         }
     }
 
@@ -621,6 +656,14 @@ struct HostView: View {
                     await load()
                 }
             }
+            Button("Download", systemImage: "arrow.down.circle") {
+                downloadTarget = DownloadTarget(
+                    path: join(currentPath, entry.filename),
+                    isDir: isDirectory(entry)
+                )
+                showFolderPicker = true
+            }
+            .disabled(isDownloading)
             Button("Copy Path", systemImage: "doc.on.doc") {
                 UIPasteboard.general.string = join(currentPath, entry.filename)
             }
@@ -844,6 +887,9 @@ struct ContentView: View {
         .onGeometryChange(for: CGFloat.self) { proxy in
             proxy.size.height
         } action: { newValue in
+            // Skip while the on-screen keyboard is up — the keyboard temporarily shrinks
+            // the layout and would otherwise force the terminal to resize on every show/hide.
+            // We only react to real window/rotation changes.
             contentHeight = newValue
             // If a previously-saved height now exceeds half the window (e.g., rotation), shrink it.
             if contentHeight > 0, terminalHeight > contentHeight / 2 {
